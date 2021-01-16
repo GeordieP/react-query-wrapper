@@ -15,20 +15,21 @@ function App() {
   return (
     <div className="App">
       <QueryWrapper queries={{ someResource, otherResource }}>
-        {/* render default or custom error content? */}
+        {/* render default or custom error content */}
         <QueryWrapper.Error />
         {/* <QueryWrapper.Error>
-          {(errors: Error[]) => errors.map((e) => <p>Message: {e.message}</p>)}
+          <p>Generic error message</p>
         </QueryWrapper.Error> */}
 
-        {/* any markup outside of querywrapper components should always render */}
+        {/* --> any markup outside of result components is always rendered;
+                useful for headers, page styling/wrappers, etc */}
         <h1>Results</h1>
 
-        {/* render default or custom loading content? */}
-        <QueryWrapper.Loading />
-        {/* <QueryWrapper.Loading>
-          <p>Custom Loading Content...</p>
-        </QueryWrapper.Loading> */}
+        {/* render default or custom loading content */}
+        {/*<QueryWrapper.Loading /> */}
+        <QueryWrapper.Loading>
+          <p>Custom Loading Spinner</p>
+        </QueryWrapper.Loading>
 
         {/* ALL queries must succeed for this to render */}
         <QueryWrapper.Success>

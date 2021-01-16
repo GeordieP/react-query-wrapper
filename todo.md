@@ -1,4 +1,7 @@
 - [x] examples
+- [ ] 'Fallback' component
+  - renders when success doesn't; during loading, or with errors
+  - allows for loading and error messages to be placed in conditional wrappers (e.g. full-screen centered div which we don't want to show on success)
 - [ ] jest tests
 - [ ] lerna
   - [ ] renderquery package

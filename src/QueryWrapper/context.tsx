@@ -36,8 +36,6 @@ const computeError = (queries: TQueries) => {
 
     if (value.error instanceof Error) {
       mut_out.errors[key] = value.error;
-    } else if ((value as any).error.message != null) {
-      mut_out.errors[key] = new Error((value.error as any).message as string); // TODO:HACK: not guaranteed to be string
     } else {
       mut_out.errors[key] = new Error(value.error as string); // TODO:HACK: not guaranteed to be string
     }

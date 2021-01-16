@@ -1,5 +1,6 @@
 import * as React from "react";
 import { RenderQueryProvider, useRenderQuery } from "./context";
+import * as Util from "./util";
 
 const RenderQuery: TRenderQuery = (props) => {
   return (
@@ -20,12 +21,12 @@ const Loading: React.FC = (props) => {
   const renderQuery = useRenderQuery();
   if (!renderQuery.loading.is) return null;
 
-  if (props.children == null)
-    return (
-      <>
-        <div>Loading Spinner...</div>
-      </>
-    );
+  if (props.children == null) return <div>Loading</div>;
+
+  if (Util.isFunction(props.children)) {
+    const loadingQueries = renderQuery.loading.which;
+    return (props.children as Function)({ loadingQueries }); // TODO: better typing of function as child
+  }
 
   return <>{props.children}</>;
 };
@@ -36,8 +37,6 @@ const Err: React.FC = (props) => {
 
   const errorEntries = Object.entries(renderQuery.error.errors!);
 
-  // default error UI - each failed query rendered with its query name and message
-  // TODO: should this instead use the actual react-query query key?
   if (props.children == null)
     return (
       <>
@@ -51,7 +50,7 @@ const Err: React.FC = (props) => {
       </>
     );
 
-  if ({}.toString.call(props.children) === "[object Function]") {
+  if (Util.isFunction(props.children)) {
     return (props.children as Function)({ errors: errorEntries }); // TODO: better typing of function as child
   }
 

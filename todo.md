@@ -1,0 +1,10 @@
+- [x] examples
+- [ ] jest tests
+- [ ] lerna
+  - [ ] renderquery package
+  - [ ] demo app package
+- [ ] export types?
+- [ ] types for loading, error components
+  - typed function as children options
+- [ ] publish package
+- [ ] docs

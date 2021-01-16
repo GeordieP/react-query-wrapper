@@ -1,9 +1,12 @@
 declare interface RenderQueryQueries
   extends Record<string, QueryObserverResult> {}
 
+interface CurrentlyLoadingQueries
+  extends Array<{ name: string; isLoading: boolean }> {}
+
 declare interface RenderQueryLoadingState {
   is: boolean;
-  which: string[];
+  which: CurrentlyLoadingQueries;
 }
 
 declare interface RenderQueryErrorState {

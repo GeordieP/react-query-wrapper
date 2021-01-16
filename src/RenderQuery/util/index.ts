@@ -5,11 +5,14 @@ export const computeLoading = (queries: RenderQueryQueries) => {
   };
 
   const entries = Object.entries(queries);
-  for (const [key, value] of entries) {
-    if (!value.isLoading) continue;
+  for (const [name, value] of entries) {
+    if (!value.isLoading) {
+      mut_out.which.push({ name, isLoading: false });
+      continue;
+    }
 
     mut_out.is = true;
-    mut_out.which = [...mut_out.which, key];
+    mut_out.which.push({ name, isLoading: true });
   }
 
   return mut_out;
@@ -36,3 +39,6 @@ export const computeError = (queries: RenderQueryQueries) => {
 
   return mut_out;
 };
+
+export const isFunction = (maybeFunction: any) =>
+  ({}.toString.call(maybeFunction) === "[object Function]");

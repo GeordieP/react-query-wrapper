@@ -4,6 +4,7 @@ import QueryWrapper from "./QueryWrapper";
 
 const successFetcher = () =>
   fetch("/api/success").then<TResponse>((x) => x.json());
+// eslint-disable-next-line
 const errorFetcher = () => fetch("/api/error").then((x) => x.json());
 const slowFetcher = () =>
   new Promise<TResponse>((r) => setTimeout(() => r(successFetcher()), 3000));

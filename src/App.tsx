@@ -1,9 +1,6 @@
 import { useQuery } from "react-query";
 import "./App.css";
-
-const QKeys = {
-  someResource: "someResource",
-};
+import QueryWrapper from "./QueryWrapper";
 
 const successFetcher = () =>
   fetch("/api/success").then<TResponse>((x) => x.json());
@@ -12,32 +9,33 @@ const slowFetcher = () =>
   new Promise<TResponse>((r) => setTimeout(() => r(successFetcher()), 3000));
 
 function App() {
-  const someResource = useQuery<TResponse>(QKeys.someResource, slowFetcher);
-  // const someResource = useQuery<TResponse>(QKeys.someResource, successFetcher);
-  // const someResource = useQuery<TResponse>(QKeys.someResource, errorFetcher);
+  const someResource = useQuery<TResponse>("someResource", slowFetcher);
+  const otherResource = useQuery<TResponse>("otherResource", successFetcher);
 
   return (
     <div className="App">
-      <QueryWrapper queries={{ someResource }}>
+      <QueryWrapper queries={{ someResource, otherResource }}>
         {/* render default or custom error content? */}
-        {/* <QueryWrapper.Error /> */}
-        <QueryWrapper.Error>
+        <QueryWrapper.Error />
+        {/* <QueryWrapper.Error>
           {(errors: Error[]) => errors.map((e) => <p>Message: {e.message}</p>)}
-        </QueryWrapper.Error>
+        </QueryWrapper.Error> */}
 
         {/* any markup outside of querywrapper components should always render */}
         <h1>Results</h1>
 
         {/* render default or custom loading content? */}
-        {/* <QueryWrapper.Loading /> */}
-        <QueryWrapper.Loading>
+        <QueryWrapper.Loading />
+        {/* <QueryWrapper.Loading>
           <p>Custom Loading Content...</p>
-        </QueryWrapper.Loading>
+        </QueryWrapper.Loading> */}
 
+        {/* ALL queries must succeed for this to render */}
         <QueryWrapper.Success>
-          <h4>Resource loaded</h4>
+          <h4>Resources loaded</h4>
           <p>{someResource.data?.foo}</p>
           <p>{someResource.data?.bar}</p>
+          <p>{otherResource.data?.foo}</p>
         </QueryWrapper.Success>
       </QueryWrapper>
     </div>

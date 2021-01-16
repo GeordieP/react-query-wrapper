@@ -1,1 +1,1 @@
-# react-query wrapper
+# @geordiep/render-query

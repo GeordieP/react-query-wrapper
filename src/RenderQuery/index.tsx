@@ -1,25 +1,24 @@
 import * as React from "react";
-import { QueryObserverResult } from "react-query";
-import { QueryWrapperProvider, useQueryWrapperResult } from "./context";
+import { RenderQueryProvider, useRenderQuery } from "./context";
 
-const QueryWrapper: TQueryWrapper = (props) => {
+const RenderQuery: TRenderQuery = (props) => {
   return (
-    <QueryWrapperProvider queries={props.queries}>
+    <RenderQueryProvider queries={props.queries}>
       <>{props.children}</>
-    </QueryWrapperProvider>
+    </RenderQueryProvider>
   );
 };
 
 const Success: React.FC = (props) => {
-  const queryWrapper = useQueryWrapperResult();
-  if (!queryWrapper.success) return null;
+  const renderQuery = useRenderQuery();
+  if (!renderQuery.success) return null;
 
   return <>{props.children}</>;
 };
 
 const Loading: React.FC = (props) => {
-  const queryWrapper = useQueryWrapperResult();
-  if (!queryWrapper.loading.is) return null;
+  const renderQuery = useRenderQuery();
+  if (!renderQuery.loading.is) return null;
 
   if (props.children == null)
     return (
@@ -32,10 +31,10 @@ const Loading: React.FC = (props) => {
 };
 
 const Err: React.FC = (props) => {
-  const queryWrapper = useQueryWrapperResult();
-  if (!queryWrapper.error.is) return null;
+  const renderQuery = useRenderQuery();
+  if (!renderQuery.error.is) return null;
 
-  const errorEntries = Object.entries(queryWrapper.error.errors!);
+  const errorEntries = Object.entries(renderQuery.error.errors!);
 
   // default error UI - each failed query rendered with its query name and message
   // TODO: should this instead use the actual react-query query key?
@@ -59,18 +58,8 @@ const Err: React.FC = (props) => {
   return <>{props.children}</>;
 };
 
-QueryWrapper.Loading = Loading;
-QueryWrapper.Success = Success;
-QueryWrapper.Error = Err;
+RenderQuery.Loading = Loading;
+RenderQuery.Success = Success;
+RenderQuery.Error = Err;
 
-export default QueryWrapper;
-
-interface QueryWrapperProps {
-  queries: Record<string, QueryObserverResult>;
-}
-
-type TQueryWrapper = React.FC<QueryWrapperProps> & {
-  Loading: typeof Loading;
-  Success: typeof Success;
-  Error: typeof Err;
-};
+export default RenderQuery;

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import "./App.css";
-import QueryWrapper from "./QueryWrapper";
+import RenderQuery from "./RenderQuery";
 
 const successFetcher = () =>
   fetch("/api/success").then<TResponse>((x) => x.json());
@@ -15,31 +15,31 @@ function App() {
 
   return (
     <div className="App">
-      <QueryWrapper queries={{ someResource, otherResource }}>
+      <RenderQuery queries={{ someResource, otherResource }}>
         {/* render default or custom error content */}
-        <QueryWrapper.Error />
-        {/* <QueryWrapper.Error>
+        <RenderQuery.Error />
+        {/* <RenderQuery.Error>
           <p>Generic error message</p>
-        </QueryWrapper.Error> */}
+        </RenderQuery.Error> */}
 
         {/* --> any markup outside of result components is always rendered;
                 useful for headers, page styling/wrappers, etc */}
         <h1>Results</h1>
 
         {/* render default or custom loading content */}
-        {/*<QueryWrapper.Loading /> */}
-        <QueryWrapper.Loading>
+        {/*<RenderQuery.Loading /> */}
+        <RenderQuery.Loading>
           <p>Custom Loading Spinner</p>
-        </QueryWrapper.Loading>
+        </RenderQuery.Loading>
 
         {/* ALL queries must succeed for this to render */}
-        <QueryWrapper.Success>
+        <RenderQuery.Success>
           <h4>Resources loaded</h4>
           <p>{someResource.data?.foo}</p>
           <p>{someResource.data?.bar}</p>
           <p>{otherResource.data?.foo}</p>
-        </QueryWrapper.Success>
-      </QueryWrapper>
+        </RenderQuery.Success>
+      </RenderQuery>
     </div>
   );
 }

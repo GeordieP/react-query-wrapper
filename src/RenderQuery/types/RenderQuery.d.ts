@@ -23,9 +23,3 @@ declare interface RenderQueryState {
 declare interface RenderQueryProps {
   queries: Record<string, QueryObserverResult>;
 }
-
-declare interface TRenderQuery extends React.FC<RenderQueryProps> {
-  Loading: typeof Loading;
-  Success: typeof Success;
-  Error: typeof Err;
-}

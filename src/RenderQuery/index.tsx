@@ -17,6 +17,13 @@ const Success: React.FC = (props) => {
   return <>{props.children}</>;
 };
 
+const Fallback: React.FC = (props) => {
+  const renderQuery = useRenderQuery();
+  if (renderQuery.success) return null;
+
+  return <>{props.children}</>;
+};
+
 const Loading: React.FC = (props) => {
   const renderQuery = useRenderQuery();
   if (!renderQuery.loading.is) return null;
@@ -59,6 +66,14 @@ const Err: React.FC = (props) => {
 
 RenderQuery.Loading = Loading;
 RenderQuery.Success = Success;
+RenderQuery.Fallback = Fallback;
 RenderQuery.Error = Err;
 
 export default RenderQuery;
+
+declare interface TRenderQuery extends React.FC<RenderQueryProps> {
+  Loading: typeof Loading;
+  Success: typeof Success;
+  Fallback: typeof Fallback;
+  Error: typeof Err;
+}
